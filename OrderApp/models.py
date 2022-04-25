@@ -17,6 +17,9 @@ class Card(BaseModel):
         total_price= self.item_title.price * self.quentity
         total_in_float = format(total_price, '.2f')
         return total_in_float
+        
+    class Meta:
+        ordering = ['-id']
 
 
 class Order(BaseModel):
@@ -35,6 +38,9 @@ class Order(BaseModel):
             total_price += order_item.get_total()
             total_in_float = format(total_price, '.2f')
         return total_in_float
+
+    class Meta:
+        ordering = ['-id']
         
 
     

@@ -10,6 +10,9 @@ class Category(BaseModel):
     def __str__(self):
         return self.name
 
+    class Meta:
+        ordering = ["-id"]
+
 
 class Product(BaseModel):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
@@ -24,5 +27,5 @@ class Product(BaseModel):
         return self.name
 
     class Meta:
-        ordering = ["name"]
+        ordering = ["-id"]
 

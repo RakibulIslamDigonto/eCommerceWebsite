@@ -1,9 +1,9 @@
-from .models import Cart, Order
+from .models import Card, Order
 from rest_framework import serializers
 
-class CartSerializer(serializers.ModelSerializer):
+class CardSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Cart
+        model = Card
         fields = '__all__'
 
 

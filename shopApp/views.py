@@ -23,7 +23,7 @@ class CategoryView(viewsets.ModelViewSet):
         data['created_by'] = request.user.id
         serializer = self.serializer_class(data=data)
         if serializer.is_valid():
-            serializer = serializer.save()
+            serializer.save()
             # Category.objects.create(category=category)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -34,7 +34,7 @@ class CategoryView(viewsets.ModelViewSet):
             category = Category.objects.get(pk=pk)
             serializer = self.serializer_class(category, data=request.data)
             if serializer.is_valid():
-                serializer = serializer.save()
+                serializer.save()
                 return Response(serializer.data, status=status.HTTP_200_OK)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         return Response({"message": "Category not found"}, status=status.HTTP_404_NOT_FOUND)
@@ -68,8 +68,8 @@ class ProductView(viewsets.ModelViewSet):
         data = request.data
         data['created_by'] = request.user.id
         serializer = self.serializer_class(data=data)
-        if serializer.is_valid:
-            serializer = serializer.save()
+        if serializer.is_valid():
+            serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -79,7 +79,7 @@ class ProductView(viewsets.ModelViewSet):
             product = Product.objects.get(pk=pk)
             serializer = self.serializer_class(product, data=request.data)
             if serializer.is_valid():
-                serializer = serializer.save()
+                serializer.save()
                 return Response(serializer.data, status=status.HTTP_200_OK)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         return Response({"message": "Product not found"}, status=status.HTTP_404_NOT_FOUND)
