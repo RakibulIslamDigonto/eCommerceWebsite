@@ -23,10 +23,10 @@ class CustomUserManager(BaseUserManager):
 
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
-        user.save()
+        user.save(using=self._db)
         return user
 
-    def create_user(self, email, password=None, **extra_fields):
+    def create_user(self, email, password, **extra_fields):
         extra_fields.setdefault('is_staff', False)
         extra_fields.setdefault('is_superuser', False)
         #when user is created,and until mail funtionality work add, set is_active to false
@@ -57,6 +57,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
     admin = models.BooleanField(default=False)
     birthday = models.DateField(null=True, blank=True)
     gender = models.CharField(max_length=50, blank=True, null=True)

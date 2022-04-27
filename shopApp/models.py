@@ -20,7 +20,7 @@ class Product(BaseModel):
     description = models.TextField(blank=True)
     price = models.DecimalField(max_digits=20, decimal_places=2)
     old_price = models.DecimalField(max_digits=20, decimal_places=2)
-    image = models.ImageField(upload_to='images/products/')
+    image = models.ImageField(upload_to='images/products/', null=True, blank=True)
     is_featured = models.BooleanField(default=False)
 
     def __str__(self):

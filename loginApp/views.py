@@ -33,19 +33,30 @@ class ObtainAuthToken(APIView):
     http_method_names = ['post']
     permission_classes = [AllowAny]
 
+
     @csrf_exempt
     def post(self, request):
-        data = {
-            'username': request.data.get('gmail', None),
-            'password': request.data.get('password', None),
-        }
-        authentication = authenticate(request, username=data['username'], password=data['password'])
-        if authentication:
-            user = User.objects.filter(email=data['username']).first()
-            if user is None:
-                return Response({"error": "User does not exist"}, status=status.HTTP_400_BAD_REQUEST)
-            return Response({'logged_in':True, 'data': user.as_json()}, status=status.HTTP_200_OK)
-        return Response({"error": "Invalid Credentials"}, status=status.HTTP_400_BAD_REQUEST)
+
+        email= request.data.get('email')
+        print('e======',email)
+        password= request.data.get('password')
+        print('ps======',password)
+        user = authenticate(request, email=email, password=password)
+        print("user is authenticated", user)
+        if user:
+            
+            token, created = Token.objects.get_or_create(user=user)
+
+            data={
+                'id': user.id,
+                'email': user.email,
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'is_active': user.is_active,
+                'token': token.key,
+            }
+            return Response(data, status=status.HTTP_200_OK)
+        return Response({'message':'what happend'},status=status.HTTP_400_BAD_REQUEST)
 
 
 class TokenCheck(APIView):
